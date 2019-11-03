@@ -1,19 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import EstyleSheet from 'react-native-extended-stylesheet';
+import MainScreen from './copmonents/MainScreen/MainScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+EstyleSheet.build({
+  $dark_grey: '#21252D',
+  $light_grey: '#282E39',
+  $primary_green: '#71A202'
 });
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Gearfinder</Text>
-    </View>
-  );
+  return <MainScreen />;
 }
