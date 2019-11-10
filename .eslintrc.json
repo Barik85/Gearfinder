@@ -1,17 +1,29 @@
 {
-  "extends": ["@react-native-community","airbnb-typescript","prettier","prettier/@typescript-eslint","prettier/react"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": [
+    "@react-native-community",
+    "airbnb-typescript",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "settings": {
     "import/resolver": {
       "node": {
         "paths": ["src"]
       }
-    },
-    "react": {
-      "pragma": "React",
-      "version": "detect"
     }
   },
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": true }]
+    "prettier/prettier": ["error", { "singleQuote": true }],
+    "react/jsx-props-no-spreading": "off"
   }
 }

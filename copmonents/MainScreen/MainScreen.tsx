@@ -1,25 +1,35 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StatusBar } from 'react-native';
 import EstyleSheet from 'react-native-extended-stylesheet';
 import MainMenu from '../MainMenu/MainMenu';
 
 const styles = EstyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '$dark_grey'
+    backgroundColor: '$dark_grey',
+    paddingTop: StatusBar.currentHeight
   },
   text: {
     color: '$primary_green'
   }
 });
 
-const MainScreen = (): JSX.Element => (
-  <View style={styles.container}>
-    <MainMenu />
-    <Text style={styles.text}>Gearfinder</Text>
-  </View>
-);
+export default class MainScreen extends Component {
+  state = {
+    weight: 10
+  };
 
-export default MainScreen;
+  handleInputChange = (e: React.ChangeEvent) => {
+    const {}
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" translucent />
+        <MainMenu />
+        <Text style={styles.text}>Gearfinder</Text>
+      </View>
+    );
+  }
+}
