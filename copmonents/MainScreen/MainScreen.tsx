@@ -14,20 +14,33 @@ const styles = EstyleSheet.create({
   }
 });
 
-export default class MainScreen extends Component {
+type State = {
+  weight: number;
+  height: number;
+  [propName: string]: number;
+};
+
+export default class MainScreen extends Component<{}, State> {
   state = {
-    weight: 10
+    weight: 70,
+    height: 180
   };
 
-  handleInputChange = (e: React.ChangeEvent) => {
-    const {}
-  }
+  handleChange = (name: string, value: number): void => {
+    this.setState({ [name]: value });
+  };
 
   render() {
+    const { weight, height } = this.state;
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" translucent />
-        <MainMenu />
+        <MainMenu
+          weight={weight}
+          height={height}
+          onChange={this.handleChange}
+        />
         <Text style={styles.text}>Gearfinder</Text>
       </View>
     );
