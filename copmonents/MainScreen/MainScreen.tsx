@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import EstyleSheet from 'react-native-extended-stylesheet';
 import MainMenu from '../MainMenu/MainMenu';
+import Snowboard from '../Snowboard/Snowboard';
 
 const styles = EstyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$dark_grey',
     paddingTop: StatusBar.currentHeight
-  },
-  text: {
-    color: '$primary_green'
   }
 });
 
@@ -41,7 +39,7 @@ export default class MainScreen extends Component<{}, State> {
           height={height}
           onChange={this.handleChange}
         />
-        <Text style={styles.text}>Gearfinder</Text>
+        <Snowboard />
       </View>
     );
   }
