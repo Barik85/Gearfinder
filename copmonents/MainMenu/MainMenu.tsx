@@ -7,7 +7,8 @@ import {
   Easing,
   Image,
   PanResponder,
-  Slider
+  Slider,
+  Platform
 } from 'react-native';
 
 import EstyleSheet from 'react-native-extended-stylesheet';
@@ -21,7 +22,8 @@ const styles = EstyleSheet.create({
   },
   menu: {
     backgroundColor: '$light_grey',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    paddingHorizontal: Platform.OS === 'ios' ? 15 : 0
   },
   label: {
     color: 'rgba(255, 255, 255, 0.5)',
@@ -52,18 +54,47 @@ const styles = EstyleSheet.create({
     alignSelf: 'center',
     alignItems: 'flex-end'
   },
-  text_small: {
+  textSmall: {
     color: 'rgba(255, 255, 255, 0.25)',
     fontSize: 10,
     minWidth: 50
+  },
+  togglerRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: 5,
+    borderColor: '$primary_green',
+    borderWidth: 1,
+    width: 200,
+    alignSelf: 'center',
+    overflow: 'hidden',
+    marginVertical: 10
+  },
+  togglerButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 8
+  },
+  togglerButtonActive: {
+    flex: 1,
+    paddingVertical: 8,
+    backgroundColor: '$primary_green',
+    alignItems: 'center'
+  },
+  activeText: {
+    color: '#fff'
+  },
+  regularText: {
+    color: '$primary_green'
   }
 });
 
-const MENU_HEIGHT = 150;
+const MENU_HEIGHT = Platform.OS === 'ios' ? 220 : 190;
 
 type Props = {
   weight: number;
   height: number;
+  woman: boolean;
   onChange: Function;
 };
 
@@ -80,10 +111,10 @@ export default class MainMenu extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.animatedHeight = new Animated.Value(0);
+    this.animatedHeight = new Animated.Value(MENU_HEIGHT);
     this.iconSize = new Animated.Value(20);
     this.state = {
-      isMenuOpen: false
+      isMenuOpen: true
     };
 
     this.panResponder = PanResponder.create({
@@ -158,19 +189,50 @@ export default class MainMenu extends Component<Props, State> {
     onChange('height', value);
   };
 
+  handleGenderChange = (): void => {
+    const { onChange, woman } = this.props;
+
+    onChange('woman', !woman);
+  };
+
   render(): JSX.Element {
     const { isMenuOpen } = this.state;
-    const { weight, height } = this.props;
+    const { weight, height, woman } = this.props;
     const lbs = kgToLbs(weight);
     const feet = cmToFoot(height);
+    const manButtonStyle = woman
+      ? styles.togglerButton
+      : styles.togglerButtonActive;
+    const womanButtonStyle = woman
+      ? styles.togglerButtonActive
+      : styles.togglerButton;
 
     return (
       <View>
         <Animated.View style={[styles.menu, { height: this.animatedHeight }]}>
+          <View style={styles.togglerRow}>
+            <TouchableHighlight
+              style={manButtonStyle}
+              onPress={this.handleGenderChange}
+            >
+              <Text style={woman ? styles.regularText : styles.activeText}>
+                Male
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={womanButtonStyle}
+              onPress={this.handleGenderChange}
+            >
+              <Text style={woman ? styles.activeText : styles.regularText}>
+                Female
+              </Text>
+            </TouchableHighlight>
+          </View>
+
           <View style={styles.row}>
             <Text style={styles.label}>Weight: </Text>
             <Text style={styles.text}>{weight} kg</Text>
-            <Text style={styles.text_small}> {lbs} lbs</Text>
+            <Text style={styles.textSmall}> {lbs} lbs</Text>
           </View>
 
           <Slider
@@ -186,7 +248,7 @@ export default class MainMenu extends Component<Props, State> {
           <View style={styles.row}>
             <Text style={styles.label}>Height: </Text>
             <Text style={styles.text}>{height} cm</Text>
-            <Text style={styles.text_small}> {feet} "</Text>{/*  eslint-disable-line */}
+            <Text style={styles.textSmall}> {feet} "</Text>{/*  eslint-disable-line */}
           </View>
 
           <Slider
