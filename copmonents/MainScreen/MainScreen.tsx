@@ -1,7 +1,9 @@
 import React, { Component, createContext } from 'react';
-import { View, StatusBar, Platform } from 'react-native';
+import { View, StatusBar, Platform, Text } from 'react-native';
 import EstyleSheet from 'react-native-extended-stylesheet';
+import { Route } from 'react-router-native';
 import MainMenu from '../MainMenu/MainMenu';
+import NavBar from '../NavBar/NavBar';
 import Snowboard from '../Snowboard/Snowboard';
 
 const styles = EstyleSheet.create({
@@ -9,6 +11,9 @@ const styles = EstyleSheet.create({
     flex: 1,
     backgroundColor: '$dark_grey',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20
+  },
+  wrapper: {
+    flex: 1
   }
 });
 
@@ -37,15 +42,25 @@ export default class MainScreen extends Component<{}, State> {
 
     return (
       <StateContext.Provider value={this.state}>
-        <View style={styles.container}>
-          <StatusBar barStyle="light-content" translucent />
-          <MainMenu
-            weight={weight}
-            height={height}
-            woman={woman}
-            onChange={this.handleChange}
-          />
-          <Snowboard weight={weight} woman={woman} />
+        <View style={styles.wrapper}>
+          <View style={styles.container}>
+            <StatusBar barStyle="light-content" translucent />
+            <MainMenu
+              weight={weight}
+              height={height}
+              woman={woman}
+              onChange={this.handleChange}
+            />
+            <Route
+              path="/"
+              exact
+              render={props => (
+                <Snowboard {...props} weight={weight} woman={woman} />
+              )}
+            />
+            <Route path="/ski" render={() => <Text>ski</Text>} />
+          </View>
+          <NavBar />
         </View>
       </StateContext.Provider>
     );

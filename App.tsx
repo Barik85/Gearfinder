@@ -1,5 +1,7 @@
 import React from 'react';
 import EstyleSheet from 'react-native-extended-stylesheet';
+import { NativeRouter } from 'react-router-native';
+
 import MainScreen from './copmonents/MainScreen/MainScreen';
 
 EstyleSheet.build({
@@ -11,5 +13,9 @@ EstyleSheet.build({
 });
 
 export default function App() {
-  return <MainScreen />;
+  return (
+    <NativeRouter>
+      <MainScreen />
+    </NativeRouter>
+  );
 }

@@ -15,12 +15,14 @@
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-extended-stylesheet": "^0.12.0",
-    "react-native-web": "^0.11.7"
+    "react-native-web": "^0.11.7",
+    "react-router-native": "^5.1.2"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "0.0.5",
     "@types/react": "^16.8.23",
     "@types/react-native": "^0.57.65",
+    "@types/react-router-native": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
     "babel-preset-expo": "^7.1.0",
     "eslint": "^6.6.0",
