@@ -1,22 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-native';
 import EstyleSheet from 'react-native-extended-stylesheet';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import CustomLink from './CustomLink';
 
 const styles = EstyleSheet.create({
   nav: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    backgroundColor: '$light_grey'
   }
 });
 
 const NavBar = (): JSX.Element => (
   <View style={styles.nav}>
-    <Link to="/">
-      <Text>snowboard</Text>
-    </Link>
-    <Link to="/ski">
-      <Text>ski</Text>
-    </Link>
+    <CustomLink to="/">snb</CustomLink>
+    <CustomLink to="/ski">ski</CustomLink>
   </View>
 );
 

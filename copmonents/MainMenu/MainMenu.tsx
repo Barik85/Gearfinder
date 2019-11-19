@@ -15,6 +15,7 @@ import EstyleSheet from 'react-native-extended-stylesheet';
 import settingsIcon from '../../img/settings.png';
 import arrowUp from '../../img/arrow_up.png';
 import { kgToLbs, cmToFoot } from '../../utils/convert';
+import { MENU_HEIGHT } from '../../config/constants';
 
 const styles = EstyleSheet.create({
   wrapper: {
@@ -88,8 +89,6 @@ const styles = EstyleSheet.create({
     color: '$primary_green'
   }
 });
-
-const MENU_HEIGHT = Platform.OS === 'ios' ? 220 : 190;
 
 type Props = {
   weight: number;

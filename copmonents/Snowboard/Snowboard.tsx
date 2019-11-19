@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Image, Dimensions, StyleSheet, Text } from 'react-native';
 import EstyleSheet from 'react-native-extended-stylesheet';
+import { MENU_HEIGHT } from '../../config/constants';
 
 import snowboardImg from '../../img/Snowboard.png';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+const imgHeight = screenHeight - MENU_HEIGHT - 150;
 
 const styles = EstyleSheet.create({
   container: {
@@ -20,13 +22,13 @@ const styles = EstyleSheet.create({
     position: 'relative'
   },
   image: {
-    height: screenHeight / 2,
-    width: (screenHeight * 0.21953) / 2
+    height: imgHeight,
+    width: imgHeight * 0.21953
   },
   verticalLine: {
     borderRightColor: '#fff',
     borderRightWidth: StyleSheet.hairlineWidth,
-    height: screenHeight / 6
+    height: imgHeight / 3
   },
   rightColumn: {
     justifyContent: 'space-between',
