@@ -6,7 +6,8 @@ import CustomLink from './CustomLink';
 const styles = EstyleSheet.create({
   nav: {
     flexDirection: 'row',
-    backgroundColor: '$light_grey'
+    backgroundColor: '$light_grey',
+    justifyContent: 'center'
   }
 });
 

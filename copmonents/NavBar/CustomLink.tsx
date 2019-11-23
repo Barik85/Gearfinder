@@ -6,19 +6,22 @@ import { Text } from 'react-native';
 const styles = EstyleSheet.create({
   text: {
     color: '#fff',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    alignSelf: 'center'
   },
   link: {
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderTopColor: 'transparent',
-    borderTopWidth: 2
+    borderTopWidth: 2,
+    flex: 1
   },
   activeLink: {
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderTopColor: '$primary_green',
-    borderTopWidth: 2
+    borderTopWidth: 2,
+    flex: 1
   }
 });
 

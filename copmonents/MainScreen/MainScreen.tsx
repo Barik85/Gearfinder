@@ -1,10 +1,11 @@
 import React, { Component, createContext } from 'react';
-import { View, StatusBar, Platform, Text } from 'react-native';
+import { View, StatusBar, Platform } from 'react-native';
 import EstyleSheet from 'react-native-extended-stylesheet';
 import { Route } from 'react-router-native';
 import MainMenu from '../MainMenu/MainMenu';
 import NavBar from '../NavBar/NavBar';
 import Snowboard from '../Snowboard/Snowboard';
+import Ski from '../Ski/Ski';
 
 const styles = EstyleSheet.create({
   container: {
@@ -58,7 +59,10 @@ export default class MainScreen extends Component<{}, State> {
                 <Snowboard {...props} weight={weight} woman={woman} />
               )}
             />
-            <Route path="/ski" render={() => <Text>ski</Text>} />
+            <Route
+              path="/ski"
+              render={props => <Ski {...props} weight={weight} woman={woman} />}
+            />
           </View>
           <NavBar />
         </View>

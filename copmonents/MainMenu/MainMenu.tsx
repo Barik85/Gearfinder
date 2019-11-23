@@ -14,12 +14,19 @@ import {
 import EstyleSheet from 'react-native-extended-stylesheet';
 import settingsIcon from '../../img/settings.png';
 import arrowUp from '../../img/arrow_up.png';
-import { kgToLbs, cmToFoot } from '../../utils/convert';
+import { kgToLbs } from '../../utils/convert';
 import { MENU_HEIGHT } from '../../config/constants';
+import RadioButton from './RadioButton';
+import maleSymbol from '../../img/male.png';
+import femaleSymbol from '../../img/female.png';
 
 const styles = EstyleSheet.create({
-  wrapper: {
-    backgroundColor: 'transparent'
+  header: {
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 15
   },
   menu: {
     backgroundColor: '$light_grey',
@@ -27,8 +34,7 @@ const styles = EstyleSheet.create({
     paddingHorizontal: Platform.OS === 'ios' ? 15 : 0
   },
   label: {
-    color: 'rgba(255, 255, 255, 0.5)',
-    alignSelf: 'center'
+    color: 'rgba(255, 255, 255, 0.5)'
   },
   text: {
     color: '#fff',
@@ -38,11 +44,15 @@ const styles = EstyleSheet.create({
     width: 20,
     height: 20
   },
+  iconSmall: {
+    width: 15,
+    height: 15,
+    marginRight: 10
+  },
   button: {
-    alignSelf: 'flex-end',
     paddingVertical: 5,
     paddingHorizontal: 7,
-    marginRight: 15,
+    marginLeft: 'auto',
     backgroundColor: '$light_grey',
     borderBottomEndRadius: 5,
     borderBottomStartRadius: 5,
@@ -63,30 +73,9 @@ const styles = EstyleSheet.create({
   togglerRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    borderRadius: 5,
-    borderColor: '$primary_green',
-    borderWidth: 1,
-    width: 200,
     alignSelf: 'center',
-    overflow: 'hidden',
-    marginVertical: 10
-  },
-  togglerButton: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: 8
-  },
-  togglerButtonActive: {
-    flex: 1,
-    paddingVertical: 8,
-    backgroundColor: '$primary_green',
-    alignItems: 'center'
-  },
-  activeText: {
-    color: '#fff'
-  },
-  regularText: {
-    color: '$primary_green'
+    marginBottom: 10,
+    marginTop: 15
   }
 });
 
@@ -183,49 +172,39 @@ export default class MainMenu extends Component<Props, State> {
     onChange('weight', value);
   };
 
-  handleHeightChange = (value: number): void => {
+  // handleHeightChange = (value: number): void => {
+  //   const { onChange } = this.props;
+  //   onChange('height', value);
+  // };
+
+  handleGenderChange = (value: boolean): void => {
     const { onChange } = this.props;
-    onChange('height', value);
-  };
 
-  handleGenderChange = (): void => {
-    const { onChange, woman } = this.props;
-
-    onChange('woman', !woman);
+    onChange('woman', value);
   };
 
   render(): JSX.Element {
     const { isMenuOpen } = this.state;
-    const { weight, height, woman } = this.props;
+    const { weight, woman } = this.props;
     const lbs = kgToLbs(weight);
-    const feet = cmToFoot(height);
-    const manButtonStyle = woman
-      ? styles.togglerButton
-      : styles.togglerButtonActive;
-    const womanButtonStyle = woman
-      ? styles.togglerButtonActive
-      : styles.togglerButton;
+    // const feet = cmToFoot(height);
 
     return (
       <View>
         <Animated.View style={[styles.menu, { height: this.animatedHeight }]}>
           <View style={styles.togglerRow}>
-            <TouchableHighlight
-              style={manButtonStyle}
+            <RadioButton
+              label="Male"
               onPress={this.handleGenderChange}
-            >
-              <Text style={woman ? styles.regularText : styles.activeText}>
-                Male
-              </Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={womanButtonStyle}
+              value={woman}
+              itemValue={false}
+            />
+            <RadioButton
+              label="Female"
               onPress={this.handleGenderChange}
-            >
-              <Text style={woman ? styles.activeText : styles.regularText}>
-                Female
-              </Text>
-            </TouchableHighlight>
+              value={woman}
+              itemValue
+            />
           </View>
 
           <View style={styles.row}>
@@ -244,13 +223,13 @@ export default class MainMenu extends Component<Props, State> {
             onValueChange={this.handleWeightChange}
           />
 
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <Text style={styles.label}>Height: </Text>
             <Text style={styles.text}>{height} cm</Text>
-            <Text style={styles.textSmall}> {feet} "</Text>{/*  eslint-disable-line */}
-          </View>
+            <Text style={styles.textSmall}> {feet} "</Text>
+          </View> */}
 
-          <Slider
+          {/* <Slider
             minimumValue={100}
             maximumValue={250}
             step={1}
@@ -258,9 +237,19 @@ export default class MainMenu extends Component<Props, State> {
             minimumTrackTintColor="#71A202"
             value={height}
             onValueChange={this.handleHeightChange}
-          />
+          /> */}
         </Animated.View>
-        <View {...this.panResponder.panHandlers} style={styles.wrapper}>
+        <View {...this.panResponder.panHandlers} style={styles.header}>
+          {!isMenuOpen && (
+            <>
+              <Image
+                source={woman ? femaleSymbol : maleSymbol}
+                style={styles.iconSmall}
+              />
+              <Text style={styles.label}>Weight: </Text>
+              <Text style={styles.text}>{weight} kg</Text>
+            </>
+          )}
           <TouchableHighlight onPress={this.toggleMenu} style={styles.button}>
             {isMenuOpen ? (
               <Image source={arrowUp} style={styles.icon} />
