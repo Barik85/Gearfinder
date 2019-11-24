@@ -15,7 +15,7 @@ import EstyleSheet from 'react-native-extended-stylesheet';
 import settingsIcon from '../../img/settings.png';
 import arrowUp from '../../img/arrow_up.png';
 import { kgToLbs } from '../../utils/convert';
-import { MENU_HEIGHT } from '../../config/constants';
+import { MENU_HEIGHT, MAX_WEIGHT, MIN_WEIGHT } from '../../config/constants';
 import RadioButton from './RadioButton';
 import maleSymbol from '../../img/male.png';
 import femaleSymbol from '../../img/female.png';
@@ -214,8 +214,8 @@ export default class MainMenu extends Component<Props, State> {
           </View>
 
           <Slider
-            minimumValue={10}
-            maximumValue={200}
+            minimumValue={MIN_WEIGHT}
+            maximumValue={MAX_WEIGHT}
             step={1}
             thumbTintColor="#71A202"
             minimumTrackTintColor="#71A202"

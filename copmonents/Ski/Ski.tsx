@@ -12,9 +12,15 @@ type Props = {
 const Ski = (props: Props): JSX.Element => {
   const { weight, woman } = props;
 
-  const skiSize = woman
-    ? Math.round(weight * 0.4 + 127)
+  let skiSize = woman
+    ? Math.round(weight * 0.4 + 130)
     : Math.round(weight * 0.3 + 140);
+
+  if (weight <= 35) {
+    skiSize = Math.round(weight * 2.9 + 40);
+  } else if (weight > 93) {
+    Math.round(weight * 0.3 + 140);
+  }
 
   return (
     <View style={styles.container}>
