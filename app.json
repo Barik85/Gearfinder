@@ -24,8 +24,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.barylo.gearfinder"
     },
-    "description": ""
+    "android": {
+      "package": "com.barylo.gearfinder"
+    },
+    "description": "Gear size calculator"
   }
 }
