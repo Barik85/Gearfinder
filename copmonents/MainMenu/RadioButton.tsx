@@ -8,6 +8,9 @@ const styles = EstyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 15
   },
+  wrapper: {
+    padding: 5
+  },
   circle: {
     width: 20,
     height: 20,
@@ -44,8 +47,10 @@ const RadioButton = ({ label, onPress, value, itemValue }: Props) => {
 
   return (
     <View style={styles.row}>
-      <TouchableOpacity style={styles.circle} onPress={handlePress}>
-        {value === itemValue ? <View style={styles.circleChecked} /> : null}
+      <TouchableOpacity style={styles.wrapper} onPress={handlePress}>
+        <View style={styles.circle}>
+          {value === itemValue ? <View style={styles.circleChecked} /> : null}
+        </View>
       </TouchableOpacity>
       <Text style={value === itemValue ? styles.activeLabel : styles.label}>
         {label}
