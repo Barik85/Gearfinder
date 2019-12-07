@@ -55,11 +55,10 @@ buck-out
 .watchmanconfig
 
 # Android
-.idea
-.gradle
-local.properties
-*.iml
-/android/
+/android/app/build
+
+# keystore file
+**/*.keystore
 
 # Node
 node_modules
@@ -104,7 +103,3 @@ RNTester/Pods/*
 # react-native-codegen
 /ReactCommon/fabric/components/rncore/
 /schema-rncore.json
-
-# Visual studio
-.vscode
-.vs

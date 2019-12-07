@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Gearfinder</string>
+    <color name="grey">#202a37</color>
 </resources>
