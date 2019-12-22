@@ -35,6 +35,9 @@
         "backgroundColor": "#292f3a"
       }
     },
-    "description": "Snowboard, ski size calculator"
-  }
+    "description": "Snowboard, ski size calculator",
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "Gearfinder",
+  "name": "gearfinder"
 }
