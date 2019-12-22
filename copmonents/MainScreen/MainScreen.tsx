@@ -46,12 +46,7 @@ export default class MainScreen extends Component<{}, State> {
         <View style={styles.wrapper}>
           <View style={styles.container}>
             <StatusBar barStyle="light-content" translucent />
-            <MainMenu
-              weight={weight}
-              height={height}
-              woman={woman}
-              onChange={this.handleChange}
-            />
+            <NavBar />
             <Route
               path="/"
               exact
@@ -63,8 +58,14 @@ export default class MainScreen extends Component<{}, State> {
               path="/ski"
               render={props => <Ski {...props} weight={weight} woman={woman} />}
             />
+
+            <MainMenu
+              weight={weight}
+              height={height}
+              woman={woman}
+              onChange={this.handleChange}
+            />
           </View>
-          <NavBar />
         </View>
       </StateContext.Provider>
     );

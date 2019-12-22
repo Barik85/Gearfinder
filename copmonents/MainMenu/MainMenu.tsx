@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Animated,
-  TouchableHighlight,
   Easing,
   Image,
   PanResponder,
@@ -13,7 +12,7 @@ import {
 
 import EstyleSheet from 'react-native-extended-stylesheet';
 import settingsIcon from '../../img/settings.png';
-import arrowUp from '../../img/arrow_up.png';
+import arrowDown from '../../img/arrow_down.png';
 import { kgToLbs } from '../../utils/convert';
 import { MENU_HEIGHT, MAX_WEIGHT, MIN_WEIGHT } from '../../config/constants';
 import RadioButton from './RadioButton';
@@ -54,8 +53,8 @@ const styles = EstyleSheet.create({
     paddingHorizontal: 7,
     marginLeft: 'auto',
     backgroundColor: '$light_grey',
-    borderBottomEndRadius: 5,
-    borderBottomStartRadius: 5,
+    borderTopEndRadius: 5,
+    borderTopStartRadius: 5,
     minWidth: 34,
     minHeight: 30
   },
@@ -111,20 +110,28 @@ export default class MainMenu extends Component<Props, State> {
         const { isMenuOpen } = this.state;
         if (isMenuOpen) {
           let currentHeight =
-            MENU_HEIGHT - gestureState.dy * -1 > MENU_HEIGHT
+            MENU_HEIGHT - gestureState.dy > MENU_HEIGHT
               ? MENU_HEIGHT
-              : MENU_HEIGHT - gestureState.dy * -1;
+              : MENU_HEIGHT - gestureState.dy;
           if (currentHeight < 0) currentHeight = 0;
           this.animatedHeight.setValue(currentHeight);
         } else {
           let currentHeight =
-            gestureState.dy > MENU_HEIGHT ? MENU_HEIGHT : gestureState.dy;
+            gestureState.dy * -1 > MENU_HEIGHT
+              ? MENU_HEIGHT
+              : gestureState.dy * -1;
           if (currentHeight < 0) currentHeight = 0;
           this.animatedHeight.setValue(currentHeight);
         }
       },
       onPanResponderEnd: (e, gestureState) => {
-        const toValue = gestureState.dy > MENU_HEIGHT / 2 ? MENU_HEIGHT : 0;
+        if (gestureState.x0 > 300 && Math.abs(gestureState.dy) < 1) {
+          this.toggleMenu();
+          return;
+        }
+
+        const toValue =
+          gestureState.dy * -1 > MENU_HEIGHT / 2 ? MENU_HEIGHT : 0;
         Animated.timing(this.animatedHeight, {
           toValue,
           duration: 200,
@@ -191,6 +198,28 @@ export default class MainMenu extends Component<Props, State> {
 
     return (
       <View>
+        <View {...this.panResponder.panHandlers} style={styles.header}>
+          {!isMenuOpen && (
+            <>
+              <Image
+                source={woman ? femaleSymbol : maleSymbol}
+                style={styles.iconSmall}
+              />
+              <Text style={styles.label}>Weight: </Text>
+              <Text style={styles.text}>{weight} kg</Text>
+            </>
+          )}
+          <View style={styles.button} data-item="menu_button">
+            {isMenuOpen ? (
+              <Image source={arrowDown} style={styles.icon} />
+            ) : (
+              <Animated.Image
+                source={settingsIcon}
+                style={{ width: this.iconSize, height: this.iconSize }}
+              />
+            )}
+          </View>
+        </View>
         <Animated.View style={[styles.menu, { height: this.animatedHeight }]}>
           <View style={styles.togglerRow}>
             <RadioButton
@@ -239,28 +268,6 @@ export default class MainMenu extends Component<Props, State> {
             onValueChange={this.handleHeightChange}
           /> */}
         </Animated.View>
-        <View {...this.panResponder.panHandlers} style={styles.header}>
-          {!isMenuOpen && (
-            <>
-              <Image
-                source={woman ? femaleSymbol : maleSymbol}
-                style={styles.iconSmall}
-              />
-              <Text style={styles.label}>Weight: </Text>
-              <Text style={styles.text}>{weight} kg</Text>
-            </>
-          )}
-          <TouchableHighlight onPress={this.toggleMenu} style={styles.button}>
-            {isMenuOpen ? (
-              <Image source={arrowUp} style={styles.icon} />
-            ) : (
-              <Animated.Image
-                source={settingsIcon}
-                style={{ width: this.iconSize, height: this.iconSize }}
-              />
-            )}
-          </TouchableHighlight>
-        </View>
       </View>
     );
   }
