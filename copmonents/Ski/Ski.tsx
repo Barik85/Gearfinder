@@ -6,21 +6,25 @@ import skiImg from '../../img/Ski.png';
 
 type Props = {
   weight: number;
+  height: number;
   woman: boolean;
 };
 
 const Ski = (props: Props): JSX.Element => {
-  const { weight, woman } = props;
+  const { weight, height, woman } = props;
 
-  let skiSize = woman
-    ? Math.round(weight * 0.4 + 130)
-    : Math.round(weight * 0.3 + 140);
+  let skiSize = woman ? Math.round(height - 10) : Math.round(height - 5);
 
-  if (weight <= 35) {
-    skiSize = Math.round(weight * 2.9 + 40);
-  } else if (weight > 93) {
-    Math.round(weight * 0.3 + 140);
-  }
+  const shouldReduce = height - weight > 105;
+  const shouldAdd = height - weight < 95;
+  if (shouldReduce) skiSize -= 5;
+  if (shouldAdd) skiSize += 5;
+
+  // if (weight <= 35) {
+  //   skiSize = Math.round(weight * 2.9 + 40);
+  // } else if (weight > 93) {
+  //   Math.round(weight * 0.3 + 140);
+  // }
 
   return (
     <View style={styles.container}>

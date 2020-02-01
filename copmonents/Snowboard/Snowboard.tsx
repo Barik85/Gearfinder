@@ -13,13 +13,13 @@ const Snowboard = (props: Props): JSX.Element => {
   const { weight, woman } = props;
 
   let snowboardSize = woman
-    ? Math.round(weight * 0.4 + 127)
-    : Math.round(weight * 0.3 + 136);
+    ? Math.round(weight * 0.32 + 127)
+    : Math.round(weight * 0.3831 + 127.1319);
 
   if (weight <= 35) {
     snowboardSize = Math.round(weight * 2.5 + 45);
-  } else if (weight > 93) {
-    Math.round(weight * 0.3 + 136);
+    // } else if (weight > 93) {
+    //   Math.round(weight * 0.3 + 136);
   }
 
   return (

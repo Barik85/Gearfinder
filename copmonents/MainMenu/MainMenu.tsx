@@ -13,13 +13,19 @@ import {
 import EstyleSheet from 'react-native-extended-stylesheet';
 import settingsIcon from '../../img/settings.png';
 import arrowDown from '../../img/arrow_down.png';
-import { kgToLbs } from '../../utils/convert';
+import { kgToLbs, cmToFoot } from '../../utils/convert';
 import { MENU_HEIGHT, MAX_WEIGHT, MIN_WEIGHT } from '../../config/constants';
 import RadioButton from './RadioButton';
 import maleSymbol from '../../img/male.png';
 import femaleSymbol from '../../img/female.png';
 
 const styles = EstyleSheet.create({
+  wrapper: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0
+  },
   header: {
     backgroundColor: 'transparent',
     flexDirection: 'row',
@@ -56,7 +62,8 @@ const styles = EstyleSheet.create({
     borderTopEndRadius: 5,
     borderTopStartRadius: 5,
     minWidth: 34,
-    minHeight: 30
+    minHeight: 30,
+    alignItems: 'center'
   },
   row: {
     flexDirection: 'row',
@@ -75,6 +82,10 @@ const styles = EstyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10,
     marginTop: 15
+  },
+  footer: {
+    height: 8,
+    backgroundColor: '$light_grey'
   }
 });
 
@@ -144,13 +155,12 @@ export default class MainMenu extends Component<Props, State> {
   }
 
   componentDidMount(): void {
-    setTimeout(() => {
-      this.iconSize.setValue(17);
-      Animated.spring(this.iconSize, {
-        toValue: 20,
-        friction: 2
-      }).start();
-    }, 200);
+    this.iconSize.setValue(16);
+    Animated.spring(this.iconSize, {
+      toValue: 20,
+      delay: 500,
+      damping: 4
+    }).start();
   }
 
   toggleMenu = (): void => {
@@ -179,10 +189,10 @@ export default class MainMenu extends Component<Props, State> {
     onChange('weight', value);
   };
 
-  // handleHeightChange = (value: number): void => {
-  //   const { onChange } = this.props;
-  //   onChange('height', value);
-  // };
+  handleHeightChange = (value: number): void => {
+    const { onChange } = this.props;
+    onChange('height', value);
+  };
 
   handleGenderChange = (value: boolean): void => {
     const { onChange } = this.props;
@@ -192,12 +202,12 @@ export default class MainMenu extends Component<Props, State> {
 
   render(): JSX.Element {
     const { isMenuOpen } = this.state;
-    const { weight, woman } = this.props;
+    const { weight, height, woman } = this.props;
     const lbs = kgToLbs(weight);
-    // const feet = cmToFoot(height);
+    const feet = cmToFoot(height);
 
     return (
-      <View>
+      <View style={styles.wrapper}>
         <View {...this.panResponder.panHandlers} style={styles.header}>
           {!isMenuOpen && (
             <>
@@ -211,7 +221,10 @@ export default class MainMenu extends Component<Props, State> {
           )}
           <View style={styles.button} data-item="menu_button">
             {isMenuOpen ? (
-              <Image source={arrowDown} style={styles.icon} />
+              <Animated.Image
+                source={arrowDown}
+                style={{ width: this.iconSize, height: this.iconSize }}
+              />
             ) : (
               <Animated.Image
                 source={settingsIcon}
@@ -220,6 +233,7 @@ export default class MainMenu extends Component<Props, State> {
             )}
           </View>
         </View>
+        <View style={styles.footer} />
         <Animated.View style={[styles.menu, { height: this.animatedHeight }]}>
           <View style={styles.togglerRow}>
             <RadioButton
@@ -252,13 +266,13 @@ export default class MainMenu extends Component<Props, State> {
             onValueChange={this.handleWeightChange}
           />
 
-          {/* <View style={styles.row}>
+          <View style={styles.row}>
             <Text style={styles.label}>Height: </Text>
             <Text style={styles.text}>{height} cm</Text>
-            <Text style={styles.textSmall}> {feet} "</Text>
-          </View> */}
+            <Text style={styles.textSmall}> {feet} &quot;</Text>
+          </View>
 
-          {/* <Slider
+          <Slider
             minimumValue={100}
             maximumValue={250}
             step={1}
@@ -266,7 +280,7 @@ export default class MainMenu extends Component<Props, State> {
             minimumTrackTintColor="#71A202"
             value={height}
             onValueChange={this.handleHeightChange}
-          /> */}
+          />
         </Animated.View>
       </View>
     );
