@@ -32,6 +32,14 @@ below.
 
 ## Android
     put my-upload-key.keystore file into android/app/
+    go to android/gradle.properties and set
+        MYAPP_UPLOAD_STORE_PASSWORD=real_password (it's manual password created when generated keystore)
+        MYAPP_UPLOAD_KEY_PASSWORD=real_password
+
+    go to
+    and setup
+        versionCode x // for Play Market
+        versionName "x.x" // for users
 
     $ cd android
     creart App Bundle (.aab file)
@@ -41,6 +49,8 @@ below.
     create Apk file
     $ ./gradlew assembleRelease
     find file android/app/build/outputs/apk/release
+
+    if problems with password after confi changing run $ ./gradlew clean
 
 ##### What's Being Used?
 
