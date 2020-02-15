@@ -11,7 +11,8 @@ const styles = EstyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$dark_grey',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
+    paddingBottom: 40
   },
   wrapper: {
     flex: 1
@@ -46,12 +47,7 @@ export default class MainScreen extends Component<{}, State> {
         <View style={styles.wrapper}>
           <View style={styles.container}>
             <StatusBar barStyle="light-content" translucent />
-            <MainMenu
-              weight={weight}
-              height={height}
-              woman={woman}
-              onChange={this.handleChange}
-            />
+            <NavBar />
             <Route
               path="/"
               exact
@@ -61,10 +57,18 @@ export default class MainScreen extends Component<{}, State> {
             />
             <Route
               path="/ski"
-              render={props => <Ski {...props} weight={weight} woman={woman} />}
+              render={props => (
+                <Ski {...props} weight={weight} height={height} woman={woman} />
+              )}
+            />
+
+            <MainMenu
+              weight={weight}
+              height={height}
+              woman={woman}
+              onChange={this.handleChange}
             />
           </View>
-          <NavBar />
         </View>
       </StateContext.Provider>
     );

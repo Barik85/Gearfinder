@@ -12,15 +12,15 @@ const styles = EstyleSheet.create({
   link: {
     paddingVertical: 15,
     paddingHorizontal: 10,
-    borderTopColor: 'transparent',
-    borderTopWidth: 2,
+    borderBottomColor: 'transparent',
+    borderBottomWidth: 2,
     flex: 1
   },
   activeLink: {
     paddingVertical: 15,
     paddingHorizontal: 10,
-    borderTopColor: '$primary_green',
-    borderTopWidth: 2,
+    borderBottomColor: '$primary_green',
+    borderBottomWidth: 2,
     flex: 1
   }
 });

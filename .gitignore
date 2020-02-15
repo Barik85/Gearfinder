@@ -35,6 +35,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+.idea
 
 # Gradle
 /build/
